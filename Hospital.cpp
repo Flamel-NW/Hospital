@@ -43,7 +43,7 @@ int main()
 
 void init()
 {
-    MOUSEMSG m;
+    ExMessage m;
     initgraph(1024, 755, NOCLOSE);
     IMAGE bk;
     loadimage(&bk, _T("img\\bk.jpg"));
@@ -57,8 +57,8 @@ void init()
 
     while (true)
     {
-        m = GetMouseMsg();
-        if (m.uMsg == WM_LBUTTONDOWN)
+        getmessage(&m);
+        if (m.message == WM_LBUTTONDOWN)
         {
             menu();
             break;
@@ -72,7 +72,7 @@ void menu()
     while (true)
     {
         cleardevice();
-        MOUSEMSG m;
+        ExMessage m;
         IMAGE bk;
         loadimage(&bk, _T("img\\bk.jpg"));
         putimage(0, 0, &bk);
@@ -99,11 +99,11 @@ void menu()
 
         while (true)
         {
-            m = GetMouseMsg();
+            getmessage(&m);
             if (m.x >= 312 && m.x <= 712 && m.y >= 225 && m.y <= 325)
             {
                 selectBox(302, 215, 722, 335, true);
-                if (m.uMsg == WM_LBUTTONDOWN)
+                if (m.message == WM_LBUTTONDOWN)
                 {
                     patient();
                     break;
@@ -112,7 +112,7 @@ void menu()
             else if (m.x >= 312 && m.x <= 712 && m.y >= 400 && m.y <= 500)
             {
                 selectBox(302, 390, 722, 510, true);
-                if (m.uMsg == WM_LBUTTONDOWN)
+                if (m.message == WM_LBUTTONDOWN)
                 {
                     doctor();
                     break;
@@ -121,7 +121,7 @@ void menu()
             else if (m.x >= 312 && m.x <= 712 && m.y >= 575 && m.y <= 675)
             {
                 selectBox(302, 565, 722, 685, true);
-                if (m.uMsg == WM_LBUTTONDOWN)
+                if (m.message == WM_LBUTTONDOWN)
                 {
                     admin();
                     break;
@@ -130,7 +130,7 @@ void menu()
             else if (m.x >= 20 && m.x <= 120 && m.y >= 690 && m.y <= 735)
             {
                 selectExit(true);
-                if (m.uMsg == WM_LBUTTONDOWN)
+                if (m.message == WM_LBUTTONDOWN)
                     return;
             }
             else
@@ -149,7 +149,7 @@ void patient()
     while (true)
     {
         cleardevice();
-        MOUSEMSG m;
+        ExMessage m;
         IMAGE bk;
         loadimage(&bk, _T("img\\bk.jpg"));
         putimage(0, 0, &bk);
@@ -173,11 +173,11 @@ void patient()
 
         while (true)
         {
-            m = GetMouseMsg();
+            getmessage(&m);
             if (m.x >= 312 && m.x <= 712 && m.y >= 275 && m.y <= 375)
             {
                 selectBox(302, 265, 722, 385, true);
-                if (m.uMsg == WM_LBUTTONDOWN)
+                if (m.message == WM_LBUTTONDOWN)
                 {
                     patientRegister();
                     break;
@@ -186,7 +186,7 @@ void patient()
             else if (m.x >= 312 && m.x <= 712 && m.y >= 450 && m.y <= 550)
             {
                 selectBox(302, 440, 722, 560, true);
-                if (m.uMsg == WM_LBUTTONDOWN)
+                if (m.message == WM_LBUTTONDOWN)
                 {
                     patientLogin();
                     break;
@@ -195,7 +195,7 @@ void patient()
             else if (m.x >= 20 && m.x <= 120 && m.y >= 690 && m.y <= 735)
             {
                 selectBack(true);
-                if (m.uMsg == WM_LBUTTONDOWN)
+                if (m.message == WM_LBUTTONDOWN)
                     return;
             }
             else
@@ -213,7 +213,7 @@ void patientRegister()
     while (true)
     {
         cleardevice();
-        MOUSEMSG m;
+        ExMessage m;
         IMAGE bk;
         loadimage(&bk, _T("img\\bk.jpg"));
         putimage(0, 0, &bk);
@@ -255,13 +255,13 @@ void patientRegister()
         while (true)
         {
             if (!get)
-                m = GetMouseMsg();
+                getmessage(&m);
             else
                 get = false;
             if (m.x >= 392 && m.x <= 792 && m.y >= 225 && m.y <= 275)
             {
                 setMouse(1);
-                if (m.uMsg == WM_LBUTTONDOWN)
+                if (m.message == WM_LBUTTONDOWN)
                 {
                     setlinecolor(BLACK);
                     line(402 + 25 * i, 235, 402 + 25 * i, 265);
@@ -273,9 +273,9 @@ void patientRegister()
 
                     while (true)
                     {
-                        if (MouseHit())
+                        if (peekmessage(&m, -1, false))
                         {
-                            m = GetMouseMsg();
+                            getmessage(&m);
                             if (m.x < 392 || m.x > 792 || m.y < 225 || m.y > 275)
                             {
                                 if (sex != 1)
@@ -297,7 +297,7 @@ void patientRegister()
                                     selectBox(452, 615, 572, 685, true);
                                 if (m.x >= 20 && m.x <= 120 && m.y >= 690 && m.y <= 735)
                                     selectBack(true);
-                                if (m.uMsg == WM_LBUTTONDOWN)
+                                if (m.message == WM_LBUTTONDOWN)
                                 {
                                     get = true;
                                     break;
@@ -326,7 +326,7 @@ void patientRegister()
                                 get = true;
                                 m.x = 462;
                                 m.y = 625;
-                                m.uMsg = WM_LBUTTONDOWN;
+                                m.message = WM_LBUTTONDOWN;
                                 break;
                             }
                             if (!isalnum(ch) || i == maxi)
@@ -346,7 +346,7 @@ void patientRegister()
             else if (m.x >= 392 && m.x <= 792 && m.y >= 375 && m.y <= 425)
             {
                 setMouse(1);
-                if (m.uMsg == WM_LBUTTONDOWN)
+                if (m.message == WM_LBUTTONDOWN)
                 {
                     setlinecolor(BLACK);
                     line(402 + 25 * j, 385, 402 + 25 * j, 415);
@@ -358,9 +358,9 @@ void patientRegister()
 
                     while (true)
                     {
-                        if (MouseHit())
+                        if (peekmessage(&m, -1, false))
                         {
-                            m = GetMouseMsg();
+                            getmessage(&m);
                             if (m.x < 392 || m.x > 792 || m.y < 375 || m.y > 425)
                             {
                                 if (sex != 1)
@@ -382,7 +382,7 @@ void patientRegister()
                                     selectBox(452, 615, 572, 685, true);
                                 if (m.x >= 20 && m.x <= 120 && m.y >= 690 && m.y <= 735)
                                     selectBack(true);
-                                if (m.uMsg == WM_LBUTTONDOWN)
+                                if (m.message == WM_LBUTTONDOWN)
                                 {
                                     get = true;
                                     break;
@@ -411,7 +411,7 @@ void patientRegister()
                                 get = true;
                                 m.x = 462;
                                 m.y = 625;
-                                m.uMsg = WM_LBUTTONDOWN;
+                                m.message = WM_LBUTTONDOWN;
                                 break;
                             }
                             if (!isdigit(ch) || j == maxj)
@@ -432,7 +432,7 @@ void patientRegister()
             {
                 if (sex != 1)
                     selectText(492, 525, 542, 575, 1, L"男");
-                if (m.uMsg == WM_LBUTTONDOWN)
+                if (m.message == WM_LBUTTONDOWN)
                 {
                     setlinecolor(WHITE);
                     line(402 + 25 * i, 235, 402 + 25 * i, 265);
@@ -447,7 +447,7 @@ void patientRegister()
             {
                 if (sex != 2)
                     selectText(642, 525, 692, 575, 3, L"女");
-                if (m.uMsg == WM_LBUTTONDOWN)
+                if (m.message == WM_LBUTTONDOWN)
                 {
                     setlinecolor(WHITE);
                     line(402 + 25 * i, 235, 402 + 25 * i, 265);
@@ -461,7 +461,7 @@ void patientRegister()
             else if (m.x >= 462 && m.x <= 562 && m.y >= 625 && m.y <= 675)
             {
                 selectBox(452, 615, 572, 685, true);
-                if (m.uMsg == WM_LBUTTONDOWN)
+                if (m.message == WM_LBUTTONDOWN)
                 {
                     setlinecolor(WHITE);
                     line(402 + 25 * i, 235, 402 + 25 * i, 265);
@@ -521,12 +521,12 @@ void patientRegister()
             else if (m.x >= 20 && m.x <= 120 && m.y >= 690 && m.y <= 735)
             {
                 selectBack(true);
-                if (m.uMsg == WM_LBUTTONDOWN)
+                if (m.message == WM_LBUTTONDOWN)
                     return;
             }
             else
             {
-                if (m.uMsg == WM_LBUTTONDOWN)
+                if (m.message == WM_LBUTTONDOWN)
                 {
                     setlinecolor(WHITE);
                     line(402 + 25 * i, 235, 402 + 25 * i, 265);
@@ -551,7 +551,7 @@ void patientLogin()
     while (true)
     {
         cleardevice();
-        MOUSEMSG m;
+        ExMessage m;
         IMAGE bk;
         loadimage(&bk, _T("img\\bk.jpg"));
         putimage(0, 0, &bk);
@@ -589,13 +589,13 @@ void patientLogin()
         while (true)
         {
             if (!get)
-                m = GetMouseMsg();
+                getmessage(&m);
             else
                 get = false;
             if (m.x >= 392 && m.x <= 792 && m.y >= 275 && m.y <= 325)
             {
                 setMouse(1);
-                if (m.uMsg == WM_LBUTTONDOWN)
+                if (m.message == WM_LBUTTONDOWN)
                 {
                     setlinecolor(BLACK);
                     line(402 + 25 * i, 285, 402 + 25 * i, 315);
@@ -607,9 +607,9 @@ void patientLogin()
 
                     while (true)
                     {
-                        if (MouseHit())
+                        if (peekmessage(&m, -1, false))
                         {
-                            m = GetMouseMsg();
+                            getmessage(&m);
                             if (m.x < 392 || m.x > 792 || m.y < 275 || m.y > 325)
                             {
                                 setMouse(0);
@@ -621,7 +621,7 @@ void patientLogin()
                                     selectBox(452, 590, 572, 660, true);
                                 if (m.x >= 20 && m.x <= 120 && m.y >= 690 && m.y <= 735)
                                     selectBack(true);
-                                if (m.uMsg == WM_LBUTTONDOWN)
+                                if (m.message == WM_LBUTTONDOWN)
                                 {
                                     get = true;
                                     break;
@@ -650,7 +650,7 @@ void patientLogin()
                                 get = true;
                                 m.x = 462;
                                 m.y = 600;
-                                m.uMsg = WM_LBUTTONDOWN;
+                                m.message = WM_LBUTTONDOWN;
                                 break;
                             }
                             if (!isdigit(ch) || i == maxi)
@@ -670,7 +670,7 @@ void patientLogin()
             else if (m.x >= 392 && m.x <= 792 && m.y >= 450 && m.y <= 500)
             {
                 setMouse(1);
-                if (m.uMsg == WM_LBUTTONDOWN)
+                if (m.message == WM_LBUTTONDOWN)
                 {
                     setlinecolor(BLACK);
                     line(402 + 25 * j, 460, 402 + 25 * j, 490);
@@ -682,9 +682,9 @@ void patientLogin()
 
                     while (true)
                     {
-                        if (MouseHit())
+                        if (peekmessage(&m, -1, false))
                         {
-                            m = GetMouseMsg();
+                            getmessage(&m);
                             if (m.x < 392 || m.x > 792 || m.y < 450 || m.y > 500)
                             {
                                 setMouse(0);
@@ -696,7 +696,7 @@ void patientLogin()
                                     selectBox(452, 590, 572, 660, true);
                                 if (m.x >= 20 && m.x <= 120 && m.y >= 690 && m.y <= 735)
                                     selectBack(true);
-                                if (m.uMsg == WM_LBUTTONDOWN)
+                                if (m.message == WM_LBUTTONDOWN)
                                 {
                                     get = true;
                                     break;
@@ -725,7 +725,7 @@ void patientLogin()
                                 get = true;
                                 m.x = 462;
                                 m.y = 600;
-                                m.uMsg = WM_LBUTTONDOWN;
+                                m.message = WM_LBUTTONDOWN;
                                 break;
                             }
                             if (!isalnum(ch) || j == maxj)
@@ -745,7 +745,7 @@ void patientLogin()
             else if (m.x >= 462 && m.x <= 562 && m.y >= 600 && m.y <= 650)
             {
                 selectBox(452, 590, 572, 660, true);
-                if (m.uMsg == WM_LBUTTONDOWN)
+                if (m.message == WM_LBUTTONDOWN)
                 {
                     setlinecolor(WHITE);
                     line(402 + 25 * i, 285, 402 + 25 * i, 315);
@@ -791,12 +791,12 @@ void patientLogin()
             else if (m.x >= 20 && m.x <= 120 && m.y >= 690 && m.y <= 735)
             {
                 selectBack(true);
-                if (m.uMsg == WM_LBUTTONDOWN)
+                if (m.message == WM_LBUTTONDOWN)
                     return;
             }
             else
             {
-                if (m.uMsg == WM_LBUTTONDOWN)
+                if (m.message == WM_LBUTTONDOWN)
                 {
                     setlinecolor(WHITE);
                     line(402 + 25 * i, 285, 402 + 25 * i, 315);
@@ -815,7 +815,7 @@ void patientChoose(Patient* p)
     while (true)
     {
         cleardevice();
-        MOUSEMSG m;
+        ExMessage m;
         IMAGE bk;
         loadimage(&bk, _T("img\\bk.jpg"));
         putimage(0, 0, &bk);
@@ -839,11 +839,11 @@ void patientChoose(Patient* p)
 
         while (true)
         {
-            m = GetMouseMsg();
+            getmessage(&m);
             if (m.x >= 312 && m.x <= 712 && m.y >= 275 && m.y <= 375)
             {
                 selectBox(302, 265, 722, 385, true);
-                if (m.uMsg == WM_LBUTTONDOWN)
+                if (m.message == WM_LBUTTONDOWN)
                 {
                     showPatient(p);
                     break;
@@ -852,7 +852,7 @@ void patientChoose(Patient* p)
             else if (m.x >= 312 && m.x <= 712 && m.y >= 450 && m.y <= 550)
             {
                 selectBox(302, 440, 722, 560, true);
-                if (m.uMsg == WM_LBUTTONDOWN)
+                if (m.message == WM_LBUTTONDOWN)
                 {
                     if (p->ifstay != -1)
                     {
@@ -878,7 +878,7 @@ void patientChoose(Patient* p)
             else if (m.x >= 20 && m.x <= 120 && m.y >= 690 && m.y <= 735)
             {
                 selectBack(true);
-                if (m.uMsg == WM_LBUTTONDOWN)
+                if (m.message == WM_LBUTTONDOWN)
                     return;
             }
             else
@@ -896,7 +896,7 @@ void showPatient(Patient* p)
     while (true)
     {
         cleardevice();
-        MOUSEMSG m;
+        ExMessage m;
         IMAGE bk;
         loadimage(&bk, _T("img\\bk.jpg"));
         putimage(0, 0, &bk);
@@ -936,11 +936,11 @@ void showPatient(Patient* p)
 
         while (true)
         {
-            m = GetMouseMsg();
+            getmessage(&m);
             if (m.x >= 422 && m.x <= 602 && m.y >= 600 && m.y <= 650)
             {
                 selectText(422, 600, 602, 650, (p->ifstay != -1) ? 1 : 0, L"住院信息");
-                if (m.uMsg == WM_LBUTTONDOWN && (p->ifstay != -1))
+                if (m.message == WM_LBUTTONDOWN && (p->ifstay != -1))
                 {
                     selectText(422, 600, 602, 650, 2, L"住院信息");
                     showStayInfo(p);
@@ -950,7 +950,7 @@ void showPatient(Patient* p)
             else if (m.x >= 20 && m.x <= 120 && m.y >= 690 && m.y <= 735)
             {
                 selectBack(true);
-                if (m.uMsg == WM_LBUTTONDOWN)
+                if (m.message == WM_LBUTTONDOWN)
                     return;
             }
             else
@@ -967,7 +967,7 @@ void showStayInfo(Patient* p)
     while (true)
     {   
         cleardevice();
-        MOUSEMSG m;
+        ExMessage m;
         IMAGE bk;
         loadimage(&bk, _T("img\\bk.jpg"));
         putimage(0, 0, &bk);
@@ -1032,11 +1032,11 @@ void showStayInfo(Patient* p)
 
         while (true)
         {
-            m = GetMouseMsg();
+            getmessage(&m);
             if (m.x >= 462 && m.x <= 562 && m.y >= 600 && m.y <= 650)
             {
                 selectBox(452, 590, 572, 660, true);
-                if (m.uMsg == WM_LBUTTONDOWN)
+                if (m.message == WM_LBUTTONDOWN)
                 {
                     int add = recharge();
                     p->money += (add == -1) ? 0 : add;
@@ -1046,7 +1046,7 @@ void showStayInfo(Patient* p)
             else if (m.x >= 20 && m.x <= 120 && m.y >= 690 && m.y <= 735)
             {
                 selectBack(true);
-                if (m.uMsg == WM_LBUTTONDOWN)
+                if (m.message == WM_LBUTTONDOWN)
                     return;
             }
             else
@@ -1063,7 +1063,7 @@ void doctor()
     while (true)
     {
         cleardevice();
-        MOUSEMSG m;
+        ExMessage m;
         IMAGE bk;
         loadimage(&bk, _T("img\\bk.jpg"));
         putimage(0, 0, &bk);
@@ -1087,11 +1087,11 @@ void doctor()
 
         while (true)
         {
-            m = GetMouseMsg();
+            getmessage(&m);
             if (m.x >= 312 && m.x <= 712 && m.y >= 275 && m.y <= 375)
             {
                 selectBox(302, 265, 722, 385, true);
-                if (m.uMsg == WM_LBUTTONDOWN)
+                if (m.message == WM_LBUTTONDOWN)
                 {
                     doctorLogin();
                     break;
@@ -1100,7 +1100,7 @@ void doctor()
             else if (m.x >= 312 && m.x <= 712 && m.y >= 450 && m.y <= 550)
             {
                 selectBox(302, 440, 722, 560, true);
-                if (m.uMsg == WM_LBUTTONDOWN)
+                if (m.message == WM_LBUTTONDOWN)
                 {
                     doctorRegister();
                     break;
@@ -1109,7 +1109,7 @@ void doctor()
             else if (m.x >= 20 && m.x <= 120 && m.y >= 690 && m.y <= 735)
             {
                 selectBack(true);
-                if (m.uMsg == WM_LBUTTONDOWN)
+                if (m.message == WM_LBUTTONDOWN)
                     return;
             }
             else
@@ -1127,7 +1127,7 @@ void doctorLogin()
     while (true)
     {
         cleardevice();
-        MOUSEMSG m;
+        ExMessage m;
         IMAGE bk;
         loadimage(&bk, _T("img\\bk.jpg"));
         putimage(0, 0, &bk);
@@ -1165,13 +1165,13 @@ void doctorLogin()
         while (true)
         {
             if (!get)
-                m = GetMouseMsg();
+                getmessage(&m);
             else
                 get = false;
             if (m.x >= 392 && m.x <= 792 && m.y >= 275 && m.y <= 325)
             {
                 setMouse(1);
-                if (m.uMsg == WM_LBUTTONDOWN)
+                if (m.message == WM_LBUTTONDOWN)
                 {
                     setlinecolor(BLACK);
                     line(402 + 25 * i, 285, 402 + 25 * i, 315);
@@ -1183,9 +1183,9 @@ void doctorLogin()
 
                     while (true)
                     {
-                        if (MouseHit())
+                        if (peekmessage(&m, -1, false))
                         {
-                            m = GetMouseMsg();
+                            getmessage(&m);
                             if (m.x < 392 || m.x > 792 || m.y < 275 || m.y > 325)
                             {
                                 setMouse(0);
@@ -1197,7 +1197,7 @@ void doctorLogin()
                                     selectBox(452, 590, 572, 660, true);
                                 if (m.x >= 20 && m.x <= 120 && m.y >= 690 && m.y <= 735)
                                     selectBack(true);
-                                if (m.uMsg == WM_LBUTTONDOWN)
+                                if (m.message == WM_LBUTTONDOWN)
                                 {
                                     get = true;
                                     break;
@@ -1226,7 +1226,7 @@ void doctorLogin()
                                 get = true;
                                 m.x = 462;
                                 m.y = 600;
-                                m.uMsg = WM_LBUTTONDOWN;
+                                m.message = WM_LBUTTONDOWN;
                                 break;
                             }
                             if (!isdigit(ch) || i == maxi)
@@ -1246,7 +1246,7 @@ void doctorLogin()
             else if (m.x >= 392 && m.x <= 792 && m.y >= 450 && m.y <= 500)
             {
                 setMouse(1);
-                if (m.uMsg == WM_LBUTTONDOWN)
+                if (m.message == WM_LBUTTONDOWN)
                 {
                     setlinecolor(BLACK);
                     line(402 + 25 * j, 460, 402 + 25 * j, 490);
@@ -1258,9 +1258,9 @@ void doctorLogin()
 
                     while (true)
                     {
-                        if (MouseHit())
+                        if (peekmessage(&m, -1, false))
                         {
-                            m = GetMouseMsg();
+                            getmessage(&m);
                             if (m.x < 392 || m.x > 792 || m.y < 450 || m.y > 500)
                             {
                                 setMouse(0);
@@ -1272,7 +1272,7 @@ void doctorLogin()
                                     selectBox(452, 590, 572, 660, true);
                                 if (m.x >= 20 && m.x <= 120 && m.y >= 690 && m.y <= 735)
                                     selectBack(true);
-                                if (m.uMsg == WM_LBUTTONDOWN)
+                                if (m.message == WM_LBUTTONDOWN)
                                 {
                                     get = true;
                                     break;
@@ -1301,7 +1301,7 @@ void doctorLogin()
                                 get = true;
                                 m.x = 462;
                                 m.y = 600;
-                                m.uMsg = WM_LBUTTONDOWN;
+                                m.message = WM_LBUTTONDOWN;
                                 break;
                             }
                             if (!isalnum(ch) || j == maxj)
@@ -1321,7 +1321,7 @@ void doctorLogin()
             else if (m.x >= 462 && m.x <= 562 && m.y >= 600 && m.y <= 650)
             {
                 selectBox(452, 590, 572, 660, true);
-                if (m.uMsg == WM_LBUTTONDOWN)
+                if (m.message == WM_LBUTTONDOWN)
                 {
                     setlinecolor(WHITE);
                     line(402 + 25 * i, 285, 402 + 25 * i, 315);
@@ -1367,12 +1367,12 @@ void doctorLogin()
             else if (m.x >= 20 && m.x <= 120 && m.y >= 690 && m.y <= 735)
             {
                 selectBack(true);
-                if (m.uMsg == WM_LBUTTONDOWN)
+                if (m.message == WM_LBUTTONDOWN)
                     return;
             }
             else
             {
-                if (m.uMsg == WM_LBUTTONDOWN)
+                if (m.message == WM_LBUTTONDOWN)
                 {
                     setlinecolor(WHITE);
                     line(402 + 25 * i, 285, 402 + 25 * i, 315);
@@ -1391,7 +1391,7 @@ void doctorInfo(Doctor* d)
     while (true)
     {
         cleardevice();
-        MOUSEMSG m;
+        ExMessage m;
         IMAGE bk;
         loadimage(&bk, _T("img\\bk.jpg"));
         putimage(0, 0, &bk);
@@ -1427,11 +1427,11 @@ void doctorInfo(Doctor* d)
 
         while (true)
         {
-            m = GetMouseMsg();
+            getmessage(&m);
             if (m.x >= 422 && m.x <= 602 && m.y >= 600 && m.y <= 650)
             {
                 selectText(422, 600, 602, 650, 1, L" 接  诊");
-                if (m.uMsg == WM_LBUTTONDOWN)
+                if (m.message == WM_LBUTTONDOWN)
                 {
                     selectText(422, 600, 602, 650, 2, L" 接  诊");
                     diagnose(d);
@@ -1441,7 +1441,7 @@ void doctorInfo(Doctor* d)
             else if (m.x >= 20 && m.x <= 120 && m.y >= 690 && m.y <= 735)
             {
                 selectBack(true);
-                if (m.uMsg == WM_LBUTTONDOWN)
+                if (m.message == WM_LBUTTONDOWN)
                     return;
             }
             else
@@ -1707,7 +1707,7 @@ void doctorRegister()
         while (true)
         {
             cleardevice();
-            MOUSEMSG m;
+            ExMessage m;
             IMAGE bk;
             loadimage(&bk, _T("img\\bk.jpg"));
             putimage(0, 0, &bk);
@@ -1740,13 +1740,13 @@ void doctorRegister()
             while (true)
             {
                 if (!get)
-                    m = GetMouseMsg();
+                    getmessage(&m);
                 else
                     get = false;
                 if (m.x >= 392 && m.x <= 792 && m.y >= 350 && m.y <= 400)
                 {
                     setMouse(1);
-                    if (m.uMsg == WM_LBUTTONDOWN)
+                    if (m.message == WM_LBUTTONDOWN)
                     {
                         setlinecolor(BLACK);
                         line(402 + 25 * i, 360, 402 + 25 * i, 390);
@@ -1757,9 +1757,9 @@ void doctorRegister()
 
                         while (true)
                         {
-                            if (MouseHit())
+                            if (peekmessage(&m, -1, false))
                             {
-                                m = GetMouseMsg();
+                                getmessage(&m);
                                 if (m.x < 392 || m.x > 792 || m.y < 360 || m.y > 390)
                                 {
                                     setMouse(0);
@@ -1769,7 +1769,7 @@ void doctorRegister()
                                         selectBox(452, 590, 572, 660, true);
                                     if (m.x >= 20 && m.x <= 120 && m.y >= 690 && m.y <= 735)
                                         selectBack(true);
-                                    if (m.uMsg == WM_LBUTTONDOWN)
+                                    if (m.message == WM_LBUTTONDOWN)
                                     {
                                         get = true;
                                         break;
@@ -1798,7 +1798,7 @@ void doctorRegister()
                                     get = true;
                                     m.x = 462;
                                     m.y = 600;
-                                    m.uMsg = WM_LBUTTONDOWN;
+                                    m.message = WM_LBUTTONDOWN;
                                     break;
                                 }
                                 if (!isalnum(ch) || i == maxi)
@@ -1818,7 +1818,7 @@ void doctorRegister()
                 else if (m.x >= 462 && m.x <= 562 && m.y >= 600 && m.y <= 650)
                 {
                     selectBox(452, 590, 572, 660, true);
-                    if (m.uMsg == WM_LBUTTONDOWN)
+                    if (m.message == WM_LBUTTONDOWN)
                     {
                         setlinecolor(WHITE);
                         line(402 + 25 * i, 360, 402 + 25 * i, 390);
@@ -1863,12 +1863,12 @@ void doctorRegister()
                 else if (m.x >= 20 && m.x <= 120 && m.y >= 690 && m.y <= 735)
                 {
                     selectBack(true);
-                    if (m.uMsg == WM_LBUTTONDOWN)
+                    if (m.message == WM_LBUTTONDOWN)
                         return;
                 }
                 else
                 {
-                    if (m.uMsg == WM_LBUTTONDOWN)
+                    if (m.message == WM_LBUTTONDOWN)
                     {
                         setlinecolor(WHITE);
                         line(402 + 25 * i, 360, 402 + 25 * i, 390);
@@ -1889,7 +1889,7 @@ void admin()
         while (true)
         {
             cleardevice();
-            MOUSEMSG m;
+            ExMessage m;
             IMAGE bk;
             loadimage(&bk, _T("img\\bk.jpg"));
             putimage(0, 0, &bk);
@@ -1913,11 +1913,11 @@ void admin()
 
             while (true)
             {
-                m = GetMouseMsg();
+                getmessage(&m);
                 if (m.x >= 312 && m.x <= 712 && m.y >= 275 && m.y <= 375)
                 {
                     selectBox(302, 265, 722, 385, true);
-                    if (m.uMsg == WM_LBUTTONDOWN)
+                    if (m.message == WM_LBUTTONDOWN)
                     {
                         switch (chooseInquire())
                         {
@@ -1940,7 +1940,7 @@ void admin()
                 else if (m.x >= 312 && m.x <= 712 && m.y >= 450 && m.y <= 550)
                 {
                     selectBox(302, 440, 722, 560, true);
-                    if (m.uMsg == WM_LBUTTONDOWN)
+                    if (m.message == WM_LBUTTONDOWN)
                     {
                         statistics();
                         break;
@@ -1949,7 +1949,7 @@ void admin()
                 else if (m.x >= 20 && m.x <= 120 && m.y >= 690 && m.y <= 735)
                 {
                     selectBack(true);
-                    if (m.uMsg == WM_LBUTTONDOWN)
+                    if (m.message == WM_LBUTTONDOWN)
                         return;
                 }
                 else
@@ -2234,7 +2234,7 @@ void statistics()
     while (true)
     {
         cleardevice();
-        MOUSEMSG m;
+        ExMessage m;
         IMAGE bk;
         loadimage(&bk, _T("img\\bk.jpg"));
         putimage(0, 0, &bk);
@@ -2261,11 +2261,11 @@ void statistics()
 
         while (true)
         {
-            m = GetMouseMsg();
+            getmessage(&m);
             if (m.x >= 312 && m.x <= 712 && m.y >= 225 && m.y <= 325)
             {
                 selectBox(302, 215, 722, 335, true);
-                if (m.uMsg == WM_LBUTTONDOWN)
+                if (m.message == WM_LBUTTONDOWN)
                 {
                     showIncome();
                     break;
@@ -2274,7 +2274,7 @@ void statistics()
             else if (m.x >= 312 && m.x <= 712 && m.y >= 400 && m.y <= 500)
             {
                 selectBox(302, 390, 722, 510, true);
-                if (m.uMsg == WM_LBUTTONDOWN)
+                if (m.message == WM_LBUTTONDOWN)
                 {
                     showInPatients();
                     break;
@@ -2283,7 +2283,7 @@ void statistics()
             else if (m.x >= 312 && m.x <= 712 && m.y >= 575 && m.y <= 675)
             {
                 selectBox(302, 565, 722, 685, true);
-                if (m.uMsg == WM_LBUTTONDOWN)
+                if (m.message == WM_LBUTTONDOWN)
                 {
                     showDoctorsCondition();
                     break;
@@ -2292,7 +2292,7 @@ void statistics()
             else if (m.x >= 20 && m.x <= 120 && m.y >= 690 && m.y <= 735)
             {
                 selectBack(true);
-                if (m.uMsg == WM_LBUTTONDOWN)
+                if (m.message == WM_LBUTTONDOWN)
                     return;
             }
             else
@@ -2420,7 +2420,7 @@ void showAdminStayInfo(Patient* p)
     while (true)
     {
         cleardevice();
-        MOUSEMSG m;
+        ExMessage m;
         IMAGE bk;
         loadimage(&bk, _T("img\\bk.jpg"));
         putimage(0, 0, &bk);
@@ -2463,11 +2463,11 @@ void showAdminStayInfo(Patient* p)
 
         while (true)
         {
-            m = GetMouseMsg();
+            getmessage(&m);
             if (m.x >= 20 && m.x <= 120 && m.y >= 690 && m.y <= 735)
             {
                 selectBack(true);
-                if (m.uMsg == WM_LBUTTONDOWN)
+                if (m.message == WM_LBUTTONDOWN)
                     return;
             }
             else

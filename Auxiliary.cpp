@@ -42,7 +42,7 @@ LPCTSTR MEDICINE[4]
 int recharge()
 {
     cleardevice();
-    MOUSEMSG m;
+    ExMessage m;
     IMAGE bk;
     loadimage(&bk, _T("img\\bk.jpg"));
     putimage(0, 0, &bk);
@@ -73,13 +73,13 @@ int recharge()
     while (true)
     {
         if (!get)
-            m = GetMouseMsg();
+            m = getmessage();
         else
             get = false;
         if (m.x >= 312 && m.x <= 712 && m.y >= 350 && m.y <= 400)
         {
             setMouse(1);
-            if (m.uMsg == WM_LBUTTONDOWN)
+            if (m.message == WM_LBUTTONDOWN)
             {
                 setlinecolor(BLACK);
                 line(322 + 25 * i, 360, 322 + 25 * i, 390);
@@ -90,9 +90,9 @@ int recharge()
 
                 while (true)
                 {
-                    if (MouseHit())
+                    if (peekmessage(&m, -1, false))
                     {
-                        m = GetMouseMsg();
+                        m = getmessage();
                         if (m.x < 312 || m.x > 712 || m.y < 350 || m.y > 400)
                         {
                             setMouse(0);
@@ -102,7 +102,7 @@ int recharge()
                                 selectBox(452, 590, 572, 660, true);
                             if (m.x >= 20 && m.x <= 120 && m.y >= 690 && m.y <= 735)
                                 selectBack(true);
-                            if (m.uMsg == WM_LBUTTONDOWN)
+                            if (m.message == WM_LBUTTONDOWN)
                             {
                                 get = true;
                                 break;
@@ -131,7 +131,7 @@ int recharge()
                             get = true;
                             m.x = 462;
                             m.y = 600;
-                            m.uMsg = WM_LBUTTONDOWN;
+                            m.message = WM_LBUTTONDOWN;
                             break;
                         }
                         if (!isdigit(ch) || i == maxi)
@@ -151,7 +151,7 @@ int recharge()
         else if (m.x >= 462 && m.x <= 562 && m.y >= 600 && m.y <= 650)
         {
             selectBox(452, 590, 572, 660, true);
-            if (m.uMsg == WM_LBUTTONDOWN)
+            if (m.message == WM_LBUTTONDOWN)
             {
                 setlinecolor(WHITE);
                 line(322 + 25 * i, 360, 322 + 25 * i, 390);
@@ -170,12 +170,12 @@ int recharge()
         else if (m.x >= 20 && m.x <= 120 && m.y >= 690 && m.y <= 735)
         {
             selectBack(true);
-            if (m.uMsg == WM_LBUTTONDOWN)
+            if (m.message == WM_LBUTTONDOWN)
                 return -1;
         }
         else
         {
-            if (m.uMsg == WM_LBUTTONDOWN)
+            if (m.message == WM_LBUTTONDOWN)
             {
                 setlinecolor(WHITE);
                 line(322 + 25 * i, 360, 322 + 25 * i, 390);
@@ -292,7 +292,7 @@ bool chooseWorkdays(int workdays[])
     memset(tempdays, 0, sizeof(tempdays));
 
     cleardevice();
-    MOUSEMSG m;
+    ExMessage m;
     IMAGE bk;
     loadimage(&bk, _T("img\\bk.jpg"));
     putimage(0, 0, &bk);
@@ -328,7 +328,7 @@ bool chooseWorkdays(int workdays[])
 
     while (true)
     {
-        m = GetMouseMsg();
+        m = getmessage();
         for (int i = 0; i < 7; i++)
         {
             if (m.x >= 337 + 50 * i && m.x <= 387 + 50 * i && m.y >= 300 && m.y <= 350)
@@ -337,7 +337,7 @@ bool chooseWorkdays(int workdays[])
                     if (j != i)
                         selectText(337 + 50 * j, 300, 387 + 50 * j, 350, tempdays[(j + 1) % 7] ? 2 : 0, days[j]);
                 selectText(337 + 50 * i, 300, 387 + 50 * i, 350, tempdays[(i + 1) % 7] ? 2 : 1, days[i]);
-                if (m.uMsg == WM_LBUTTONDOWN)
+                if (m.message == WM_LBUTTONDOWN)
                 {
                     if (tempdays[(i + 1) % 7])
                     {
@@ -355,7 +355,7 @@ bool chooseWorkdays(int workdays[])
         if (m.x >= 452 && m.x <= 572 && m.y >= 590 && m.y <= 660)
         {
             selectBox(452, 590, 572, 660, true);
-            if (m.uMsg == WM_LBUTTONDOWN)
+            if (m.message == WM_LBUTTONDOWN)
             {
                 int temp = 0;
                 for (int i = 0; i < 7; i++)
@@ -374,7 +374,7 @@ bool chooseWorkdays(int workdays[])
         else if (m.x >= 20 && m.x <= 120 && m.y >= 690 && m.y <= 735)
         {
             selectBack(true);
-            if (m.uMsg == WM_LBUTTONDOWN)
+            if (m.message == WM_LBUTTONDOWN)
                 return false;
         }
         else if (m.x < 337 || m.x > 687 || m.y < 300 || m.y > 350)
@@ -413,7 +413,7 @@ int chooseInquire()
 int enterNumber()
 {
     cleardevice();
-    MOUSEMSG m;
+    ExMessage m;
     IMAGE bk;
     loadimage(&bk, _T("img\\bk.jpg"));
     putimage(0, 0, &bk);
@@ -444,13 +444,13 @@ int enterNumber()
     while (true)
     {
         if (!get)
-            m = GetMouseMsg();
+            m = getmessage();
         else
             get = false;
         if (m.x >= 312 && m.x <= 712 && m.y >= 350 && m.y <= 400)
         {
             setMouse(1);
-            if (m.uMsg == WM_LBUTTONDOWN)
+            if (m.message == WM_LBUTTONDOWN)
             {
                 setlinecolor(BLACK);
                 line(322 + 25 * i, 360, 322 + 25 * i, 390);
@@ -461,9 +461,9 @@ int enterNumber()
 
                 while (true)
                 {
-                    if (MouseHit())
+                    if (peekmessage(&m, -1, false))
                     {
-                        m = GetMouseMsg();
+                        m = getmessage();
                         if (m.x < 312 || m.x > 712 || m.y < 350 || m.y > 400)
                         {
                             setMouse(0);
@@ -473,7 +473,7 @@ int enterNumber()
                                 selectBox(452, 590, 572, 660, true);
                             if (m.x >= 20 && m.x <= 120 && m.y >= 690 && m.y <= 735)
                                 selectBack(true);
-                            if (m.uMsg == WM_LBUTTONDOWN)
+                            if (m.message == WM_LBUTTONDOWN)
                             {
                                 get = true;
                                 break;
@@ -502,7 +502,7 @@ int enterNumber()
                             get = true;
                             m.x = 462;
                             m.y = 600;
-                            m.uMsg = WM_LBUTTONDOWN;
+                            m.message = WM_LBUTTONDOWN;
                             break;
                         }
                         if (!isdigit(ch) || i == maxi)
@@ -522,7 +522,7 @@ int enterNumber()
         else if (m.x >= 462 && m.x <= 562 && m.y >= 600 && m.y <= 650)
         {
             selectBox(452, 590, 572, 660, true);
-            if (m.uMsg == WM_LBUTTONDOWN)
+            if (m.message == WM_LBUTTONDOWN)
             {
                 setlinecolor(WHITE);
                 line(322 + 25 * i, 360, 322 + 25 * i, 390);
@@ -541,12 +541,12 @@ int enterNumber()
         else if (m.x >= 20 && m.x <= 120 && m.y >= 690 && m.y <= 735)
         {
             selectBack(true);
-            if (m.uMsg == WM_LBUTTONDOWN)
+            if (m.message == WM_LBUTTONDOWN)
                 return false;
         }
         else
         {
-            if (m.uMsg == WM_LBUTTONDOWN)
+            if (m.message == WM_LBUTTONDOWN)
             {
                 setlinecolor(WHITE);
                 line(322 + 25 * i, 360, 322 + 25 * i, 390);
@@ -663,7 +663,7 @@ int chooseDate(int year, int month)
 bool setPasswd(char passwd[])
 {
     cleardevice();
-    MOUSEMSG m;
+    ExMessage m;
     IMAGE bk;
     loadimage(&bk, _T("img\\bk.jpg"));
     putimage(0, 0, &bk);
@@ -701,13 +701,13 @@ bool setPasswd(char passwd[])
     while (true)
     {
         if (!get)
-            m = GetMouseMsg();
+            getmessage(&m);
         else
             get = false;
         if (m.x >= 392 && m.x <= 792 && m.y >= 275 && m.y <= 325)
         {
             setMouse(1);
-            if (m.uMsg == WM_LBUTTONDOWN)
+            if (m.message == WM_LBUTTONDOWN)
             {
                 setlinecolor(BLACK);
                 line(402 + 25 * i, 285, 402 + 25 * i, 315);
@@ -719,9 +719,9 @@ bool setPasswd(char passwd[])
 
                 while (true)
                 {
-                    if (MouseHit())
+                    if (peekmessage(&m, -1, false))
                     {
-                        m = GetMouseMsg();
+                        m = getmessage();
                         if (m.x < 392 || m.x > 792 || m.y < 275 || m.y > 325)
                         {
                             setMouse(0);
@@ -733,7 +733,7 @@ bool setPasswd(char passwd[])
                                 selectBox(452, 590, 572, 660, true);
                             if (m.x >= 20 && m.x <= 120 && m.y >= 690 && m.y <= 735)
                                 selectBack(true);
-                            if (m.uMsg == WM_LBUTTONDOWN)
+                            if (m.message == WM_LBUTTONDOWN)
                             {
                                 get = true;
                                 break;
@@ -762,7 +762,7 @@ bool setPasswd(char passwd[])
                             get = true;
                             m.x = 462;
                             m.y = 600;
-                            m.uMsg = WM_LBUTTONDOWN;
+                            m.message = WM_LBUTTONDOWN;
                             break;
                         }
                         if (!isalnum(ch) || i == maxi)
@@ -782,7 +782,7 @@ bool setPasswd(char passwd[])
         else if (m.x >= 392 && m.x <= 792 && m.y >= 450 && m.y <= 500)
         {
             setMouse(1);
-            if (m.uMsg == WM_LBUTTONDOWN)
+            if (m.message == WM_LBUTTONDOWN)
             {
                 setlinecolor(BLACK);
                 line(402 + 25 * j, 460, 402 + 25 * j, 490);
@@ -794,9 +794,9 @@ bool setPasswd(char passwd[])
 
                 while (true)
                 {
-                    if (MouseHit())
+                    if (peekmessage(&m, -1, false))
                     {
-                        m = GetMouseMsg();
+                        m = getmessage();
                         if (m.x < 392 || m.x > 792 || m.y < 450 || m.y > 500)
                         {
                             setMouse(0);
@@ -808,7 +808,7 @@ bool setPasswd(char passwd[])
                                 selectBox(452, 590, 572, 660, true);
                             if (m.x >= 20 && m.x <= 120 && m.y >= 690 && m.y <= 735)
                                 selectBack(true);
-                            if (m.uMsg == WM_LBUTTONDOWN)
+                            if (m.message == WM_LBUTTONDOWN)
                             {
                                 get = true;
                                 break;
@@ -837,7 +837,7 @@ bool setPasswd(char passwd[])
                             get = true;
                             m.x = 462;
                             m.y = 600;
-                            m.uMsg = WM_LBUTTONDOWN;
+                            m.message = WM_LBUTTONDOWN;
                             break;
                         }
                         if (!isalnum(ch) || j == maxj)
@@ -857,7 +857,7 @@ bool setPasswd(char passwd[])
         else if (m.x >= 462 && m.x <= 562 && m.y >= 600 && m.y <= 650)
         {
             selectBox(452, 590, 572, 660, true);
-            if (m.uMsg == WM_LBUTTONDOWN)
+            if (m.message == WM_LBUTTONDOWN)
             {
                 setlinecolor(WHITE);
                 line(402 + 25 * i, 285, 402 + 25 * i, 315);
@@ -883,12 +883,12 @@ bool setPasswd(char passwd[])
         else if (m.x >= 20 && m.x <= 120 && m.y >= 690 && m.y <= 735)
         {
             selectBack(true);
-            if (m.uMsg == WM_LBUTTONDOWN)
+            if (m.message == WM_LBUTTONDOWN)
                 return false;
         }
         else
         {
-            if (m.uMsg == WM_LBUTTONDOWN)
+            if (m.message == WM_LBUTTONDOWN)
             {
                 setlinecolor(WHITE);
                 line(402 + 25 * i, 285, 402 + 25 * i, 315);
@@ -904,7 +904,7 @@ bool setPasswd(char passwd[])
 bool adminLogin()
 {
     cleardevice();
-    MOUSEMSG m;
+    ExMessage m;
     IMAGE bk;
     loadimage(&bk, _T("img\\bk.jpg"));
     putimage(0, 0, &bk);
@@ -932,13 +932,13 @@ bool adminLogin()
     while (true)
     {
         if (!get)
-            m = GetMouseMsg();
+            m = getmessage();
         else
             get = false;
         if (m.x >= 312 && m.x <= 712 && m.y >= 350 && m.y <= 400)
         {
             setMouse(1);
-            if (m.uMsg == WM_LBUTTONDOWN)
+            if (m.message == WM_LBUTTONDOWN)
             {
                 setlinecolor(BLACK);
                 line(322 + 25 * i, 360, 322 + 25 * i, 390);
@@ -949,9 +949,9 @@ bool adminLogin()
 
                 while (true)
                 {
-                    if (MouseHit())
+                    if (peekmessage(&m, -1, false))
                     {
-                        m = GetMouseMsg();
+                        m = getmessage();
                         if (m.x < 312 || m.x > 712 || m.y < 350 || m.y > 400)
                         {
                             setMouse(0);
@@ -961,7 +961,7 @@ bool adminLogin()
                                 selectBox(452, 590, 572, 660, true);
                             if (m.x >= 20 && m.x <= 120 && m.y >= 690 && m.y <= 735)
                                 selectBack(true);
-                            if (m.uMsg == WM_LBUTTONDOWN)
+                            if (m.message == WM_LBUTTONDOWN)
                             {
                                 get = true;
                                 break;
@@ -990,7 +990,7 @@ bool adminLogin()
                             get = true;
                             m.x = 462;
                             m.y = 600;
-                            m.uMsg = WM_LBUTTONDOWN;
+                            m.message = WM_LBUTTONDOWN;
                             break;
                         }
                         if (!isalnum(ch) || i == maxi)
@@ -1010,7 +1010,7 @@ bool adminLogin()
         else if (m.x >= 462 && m.x <= 562 && m.y >= 600 && m.y <= 650)
         {
             selectBox(452, 590, 572, 660, true);
-            if (m.uMsg == WM_LBUTTONDOWN)
+            if (m.message == WM_LBUTTONDOWN)
             {
                 setlinecolor(WHITE);
                 line(322 + 25 * i, 360, 322 + 25 * i, 390);
@@ -1032,12 +1032,12 @@ bool adminLogin()
         else if (m.x >= 20 && m.x <= 120 && m.y >= 690 && m.y <= 735)
         {
             selectBack(true);
-            if (m.uMsg == WM_LBUTTONDOWN)
+            if (m.message == WM_LBUTTONDOWN)
                 return false;
         }
         else
         {
-            if (m.uMsg == WM_LBUTTONDOWN)
+            if (m.message == WM_LBUTTONDOWN)
             {
                 setlinecolor(WHITE);
                 line(322 + 25 * i, 360, 322 + 25 * i, 390);
@@ -1148,7 +1148,7 @@ int selectForm(int left, int top, int right, LPCTSTR strs[], int layers, bool re
         selectText(right, top, right + 50, top + 50, 0, L"👉");
         while (true)
         {
-            MOUSEMSG m = GetMouseMsg();
+            ExMessage m = getmessage();
             for (int i = 0; i < min(layers, 10); i++)
             {
                 if (m.x >= left && m.x <= right
@@ -1161,7 +1161,7 @@ int selectForm(int left, int top, int right, LPCTSTR strs[], int layers, bool re
                         if (j != i)
                             selectText(left, top + 50 * j, right, top + 50 * (j + 1), 0, begin[j]);
                     selectText(left, top + 50 * i, right, top + 50 * (i + 1), read ? 0 : 1, begin[i]);
-                    if (m.uMsg == WM_LBUTTONDOWN)
+                    if (m.message == WM_LBUTTONDOWN)
                         return i + begin - strs;
                 }
             }
@@ -1171,13 +1171,13 @@ int selectForm(int left, int top, int right, LPCTSTR strs[], int layers, bool re
             if (m.x >= 20 && m.x <= 120 && m.y >= 690 && m.y <= 735)
             {
                 selectBack(true);
-                if (m.uMsg == WM_LBUTTONDOWN)
+                if (m.message == WM_LBUTTONDOWN)
                     return -1;
             }
             else if (m.x >= left - 50 && m.x <= left && m.y >= top && m.y <= top + 50)
             {
                 selectText(left - 50, top, left, top + 50, 1, L"👈");
-                if (m.uMsg == WM_LBUTTONDOWN && begin > strs)
+                if (m.message == WM_LBUTTONDOWN && begin > strs)
                 {
                     begin = max(begin - 10, strs);
                     break;
@@ -1186,7 +1186,7 @@ int selectForm(int left, int top, int right, LPCTSTR strs[], int layers, bool re
             else if (m.x >= right && m.x <= right + 50 && m.y >= top && m.y <= top + 50)
             {
                 selectText(right, top, right + 50, top + 50, 1, L"👉");
-                if (m.uMsg == WM_LBUTTONDOWN && begin + 10 < strs + layers)
+                if (m.message == WM_LBUTTONDOWN && begin + 10 < strs + layers)
                 {
                     begin = min(begin + 10, strs + layers - 10);
                     break;
@@ -1212,7 +1212,7 @@ int select4Form(int left, int top, int right, LPCTSTR strs[], bool read)
             selectText(left, top + 50 * j, right, top + 50 * (j + 1), 0, begin[j]);
         while (true)
         {
-            MOUSEMSG m = GetMouseMsg();
+            ExMessage m = getmessage();
             for (int i = 0; i < 4; i++)
             {
                 if (m.x >= left && m.x <= right
@@ -1223,7 +1223,7 @@ int select4Form(int left, int top, int right, LPCTSTR strs[], bool read)
                         if (j != i)
                             selectText(left, top + 50 * j, right, top + 50 * (j + 1), 0, begin[j]);
                     selectText(left, top + 50 * i, right, top + 50 * (i + 1), read ? 0 : 1, begin[i]);
-                    if (m.uMsg == WM_LBUTTONDOWN)
+                    if (m.message == WM_LBUTTONDOWN)
                         return i;
                 }
             }
@@ -1233,7 +1233,7 @@ int select4Form(int left, int top, int right, LPCTSTR strs[], bool read)
             if (m.x >= 20 && m.x <= 120 && m.y >= 690 && m.y <= 735)
             {
                 selectBack(true);
-                if (m.uMsg == WM_LBUTTONDOWN)
+                if (m.message == WM_LBUTTONDOWN)
                     return -1;
             }
             else if (m.x < left || m.x > right || m.y < top || m.y > top + 200)
